@@ -64,15 +64,14 @@ func xlsxSetPortrait(ss *spreadsheet.Workbook) {
 	for _, sheet := range ss.Sheets() {
 		var fitToHeightAttr uint32 = 999
 		var fitToWidthAttr uint32 = 1
-
 		if sheet.X() == nil {
 			log.Fatalf("Не создан объект: %s", "sheet.X()")
 		}
 		if sheet.X().PageSetup == nil {
-			sheet.X().PageSetup = sml.NewCT_PageSetup()
-			//log.Fatalf("Не создан объект: %s", "PageSetup")
+			log.Fatalf("Не создан объект: %s", "PageSetup")
 		}
-
+		fitToPageAttr := true
+		sheet.X().SheetPr.PageSetUpPr.FitToPageAttr = &fitToPageAttr
 		sheet.X().PageSetup.FitToHeightAttr = &fitToHeightAttr
 		sheet.X().PageSetup.FitToWidthAttr = &fitToWidthAttr
 		sheet.X().PageSetup.OrientationAttr = sml.ST_OrientationPortrait
@@ -82,15 +81,14 @@ func xlsxSetLandscape(ss *spreadsheet.Workbook) {
 	for _, sheet := range ss.Sheets() {
 		var fitToHeightAttr uint32 = 999
 		var fitToWidthAttr uint32 = 1
-
 		if sheet.X() == nil {
 			log.Fatalf("Не создан объект: %s", "sheet.X()")
 		}
 		if sheet.X().PageSetup == nil {
-			sheet.X().PageSetup = sml.NewCT_PageSetup()
-			//log.Fatalf("Не создан объект: %s", "PageSetup")
+			log.Fatalf("Не создан объект: %s", "PageSetup")
 		}
-
+		fitToPageAttr := true
+		sheet.X().SheetPr.PageSetUpPr.FitToPageAttr = &fitToPageAttr
 		sheet.X().PageSetup.FitToHeightAttr = &fitToHeightAttr
 		sheet.X().PageSetup.FitToWidthAttr = &fitToWidthAttr
 		sheet.X().PageSetup.OrientationAttr = sml.ST_OrientationLandscape

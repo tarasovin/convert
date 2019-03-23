@@ -33,13 +33,6 @@ RUN cd /opt && wget https://storage.googleapis.com/golang/go${GOVERSION}.linux-a
     ln -s /opt/go/bin/go /usr/bin/ && \
     mkdir $GOPATH
 
-RUN echo deb http://archive.ubuntu.com/ubuntu trusty main universe > /etc/apt/sources.list	
-RUN echo deb http://archive.ubuntu.com/ubuntu trusty-updates main universe >> /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get install -y --allow-unauthenticated pdftk
-RUN apt-get install -y --allow-unauthenticated imagemagick
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 RUN wget https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs926/ghostscript-9.26-linux-x86_64.tgz \
 && tar zxf ghostscript-9.26-linux-x86_64.tgz && rm ghostscript-9.26-linux-x86_64.tgz && \
 cd ghostscript-9.26-linux-x86_64 && mv ./gs-926-linux-x86_64 /usr/local/bin/ghostscript \ 
@@ -57,6 +50,25 @@ cd ghostxps-9.26-linux-x86_64 && mv ./gxps-926-linux-x86_64 /usr/local/bin/gxps 
 # RUN wget https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs926/ghostpdl-9.26.tar.gz \
 # && tar zxf ghostpdl-9.26.tar.gz && rm ghostpdl-9.26.tar.gz && \
 # cd ghostpdl-9.26 && ./configure && make && make install
+
+RUN echo deb http://archive.ubuntu.com/ubuntu trusty main universe >> /etc/apt/sources.list	
+RUN echo deb http://archive.ubuntu.com/ubuntu trusty-updates main universe >> /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get install -y --allow-unauthenticated pdftk
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN echo deb http://archive.ubuntu.com/ubuntu bionic main restricted >> /etc/apt/sources.list
+RUN echo deb-src http://archive.ubuntu.com/ubuntu bionic main restricted >> /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get build-dep -y imagemagick
+RUN wget https://www.imagemagick.org/download/ImageMagick.tar.gz
+RUN tar xf ImageMagick.tar.gz
+RUN cd ImageMagick-7.0.8-34 && \
+    ./configure && make && make install && \
+    cd ../ && \
+    rm -rf ./ImageMagick-7.0.8-34 && \
+    apt clean all
+RUN ldconfig /usr/local/lib
 
 RUN wget http://libreoffice-mirror.rbc.ru/pub/libreoffice/libreoffice/stable/6.2.1/deb/x86_64/LibreOffice_6.2.1_Linux_x86-64_deb.tar.gz \
 &&  tar zxf LibreOffice_6.2.1_Linux_x86-64_deb.tar.gz && rm LibreOffice_6.2.1_Linux_x86-64_deb.tar.gz && \
@@ -78,7 +90,7 @@ RUN mv $GOPATH/bin/gosh /usr/local/bin/gosh
 RUN go get baliance.com/gooxml/
 RUN go build -i baliance.com/gooxml/...
 
-RUN mv /etc/ImageMagick/policy.xml /etc/ImageMagick/backup-policy.xml
+# RUN mv /etc/ImageMagick/policy.xml /etc/ImageMagick/backup-policy.xml
 
 COPY ./scripts/ /usr/local/bin
 

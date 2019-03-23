@@ -17,7 +17,10 @@ fi
 cd $CPATH
 
 # Перемещаем все файлы из дочерних папок наверх
-find . -mindepth 2 -type f -print -exec mv {} . \;
+# find . -mindepth 2 -type f -print -exec mv {} . \;
+
+# Перемещаем все pdf файлы из дочерних папок наверх
+find . -name '*.pdf' -mindepth 2 -type f -print -exec mv {} . \;
 
 #green "extension-to-lowercase.sh"
 bash $BIN/extension-to-lowercase.sh
