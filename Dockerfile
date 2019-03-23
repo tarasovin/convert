@@ -1,5 +1,5 @@
 FROM       ubuntu:latest
-MAINTAINER "Andrey Tarasov" "a.a.tarasov@list.ru"
+MAINTAINER "Andrey Tarasov" "https://github.com/tarasovin"
 
 ENV DEBIAN_FRONTEND noninteractive
 
