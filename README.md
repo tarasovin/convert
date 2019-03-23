@@ -9,7 +9,7 @@
  `docker build -t tarasov/convert .`
 
 
- `docker run --rm -it -v "${PWD}":/files tarasov/convert`
+ `docker run --rm -it -v "${PWD}":/files tarasov/convert bash`
 
 
  `docker run --rm -v "${PWD}":/files tarasov/convert pdftk "filename.pdf" burst`
