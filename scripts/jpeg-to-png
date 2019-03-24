@@ -1,0 +1,18 @@
+#!/bin/bash
+
+TARGET="*.jpeg"
+
+CPATH=${PWD}
+BIN=/usr/local/bin
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+
+for f in $TARGET; do
+convert "$f" "$(basename "$f" .jpeg)".png;
+done
+rm *.png 2>/dev/null
+
+chmod -R 777 *
+cd $CPATH

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+TARGET="*.pdf"
+
+CPATH=${PWD}
+BIN=/usr/local/bin
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+
+let COUNT=0
+for f in $TARGET; do
+PAGES_COUNT=$(pdftk "$f" dump_data|grep NumberOfPages| awk '{print $2}')
+echo "Файл \"$f\" - $PAGES_COUNT стр."
+let COUNT=COUNT+PAGES_COUNT
+done
+echo "Всего \"$COUNT\" стр."
+
+chmod -R 777 *
+cd $CPATH

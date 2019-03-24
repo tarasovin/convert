@@ -1,0 +1,44 @@
+#!/bin/bash
+
+iam=$(basename -- "$0")
+echo $iam "$1" $2 $3 $4
+
+TARGET="*.xlsx"
+MODE="landscape"
+DENSITY=200
+QUALITY=90
+
+BIN=/usr/local/bin
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+if [ "$2" != "" ]; then
+	MODE=$2
+fi
+if [ "$3" != "" ]; then
+	DENSITY=$3
+fi
+if [ "$4" != "" ]; then
+	QUALITY=$4
+fi
+
+TMP=$(mktemp -d ./tmp.XXXXX)
+chmod -R 777 $TMP
+cp $TARGET $TMP 2>/dev/null
+cd $TMP
+
+$BIN/xlsx-to-pdf "$TARGET" $MODE
+
+for f in *.pdf; do
+	echo "$f"
+	convert -units PixelsPerInch -density $DENSITY -quality $QUALITY -colorspace sRGB "$f" "$(basename "$f" .pdf)".jpg;
+done
+rm *.pdf 2>/dev/null
+
+cd ..
+mv $TMP/* ./ 2>/dev/null
+rm -R $TMP/ 2>/dev/null
+rm $TARGET 2>/dev/null
+
+chmod -R 777 *

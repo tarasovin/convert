@@ -1,0 +1,21 @@
+#!/bin/bash
+
+iam=$(basename -- "$0")
+echo $iam "$1"
+
+TARGET="*.pdf"
+
+BIN=/usr/local/bin
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+
+for f in $TARGET; do
+pdftk "$f" cat r1 output "$(basename "$f" .pdf)".1.pdf;
+pdftk "$f" cat 1-r2 output "$(basename "$f" .pdf)".0.pdf
+rm "$f" 2>/dev/null;
+done
+
+chmod -R 777 *
+

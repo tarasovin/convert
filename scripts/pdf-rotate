@@ -1,0 +1,41 @@
+#!/bin/bash
+
+TARGET="*.pdf"
+ANGLE=90
+DENSITY=200
+QUALITY=90
+
+CPATH=${PWD}
+BIN=/usr/local/bin
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+if [ "$2" != "" ]; then
+	ANGLE=$2
+fi
+if [ "$3" != "" ]; then
+	DENSITY=$3
+fi
+if [ "$4" != "" ]; then
+	QUALITY=$4
+fi
+
+for f in $TARGET; do
+	TMP=$(mktemp -d ./tmp.XXXXXXXXX)
+	chmod -R 777 *
+	mv "$f" "$TMP/$(basename "$f")" 2>/dev/null
+	cd $TMP
+	bash $BIN/pdf-split
+	for a in $TARGET; do
+		convert -units PixelsPerInch -density $DENSITY -quality $QUALITY -colorspace sRGB $a -rotate "$ANGLE" $a ;
+	done
+	pdftk $TARGET cat output "$(basename "$f")"
+	mv "$(basename "$f")" ../ 2>/dev/null
+	rm $TARGET 2>/dev/null
+	cd ..
+	rm -R $TMP/ 2>/dev/null
+done
+
+chmod -R 777 *
+cd $CPATH

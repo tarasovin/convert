@@ -1,0 +1,30 @@
+#!/bin/bash
+
+TARGET="*.jpg"
+ANGLE=90
+DENSITY=200
+QUALITY=90
+
+CPATH=${PWD}
+BIN=/usr/local/bin
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+if [ "$2" != "" ]; then
+	ANGLE=$2
+fi
+if [ "$3" != "" ]; then
+	DENSITY=$3
+fi
+if [ "$4" != "" ]; then
+	QUALITY=$4
+fi
+
+for f in $TARGET; do
+convert -units PixelsPerInch -density $DENSITY -quality $QUALITY -colorspace sRGB $f -rotate $ANGLE $f ;
+done
+rm *.png 2>/dev/null
+
+chmod -R 777 *
+cd $CPATH

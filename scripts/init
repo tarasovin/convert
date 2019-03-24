@@ -1,0 +1,16 @@
+#!/bin/bash
+
+TARGET=""
+MSG="init"
+
+if [ "$1" != "" ]; then
+	MSG=$1
+fi
+if [ "$2" != "" ]; then
+	TARGET=$2
+fi
+
+git config --global user.email "docker@convert.ru"
+git config --global user.name "Docker Convert"
+git init $TARGET
+git add . && git commit -a -m "$MSG"

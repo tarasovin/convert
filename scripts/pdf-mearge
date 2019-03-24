@@ -1,0 +1,26 @@
+#!/bin/bash
+
+TARGET="*.pdf"
+
+CPATH=${PWD}
+BIN=/usr/local/bin
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+
+TMP=$(mktemp -d ./tmp.XXXXXXXXX)
+NAME=${PWD##*/}.pdf
+if [ "$2" != "" ]; then
+	NAME=$2
+fi
+mv $TARGET $TMP/ 2>/dev/null
+cd $TMP
+pdftk $TARGET cat output "$NAME"
+mv $NAME ../ 2>/dev/null
+rm *.pdf 2>/dev/null
+cd ..
+rm -R $TMP/ 2>/dev/null
+
+chmod -R 777 *
+cd $CPATH

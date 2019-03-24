@@ -1,0 +1,19 @@
+#!/bin/bash
+
+iam=$(basename -- "$0")
+echo $iam
+
+TARGET="*.xlsx"
+
+CPATH=${PWD}
+BIN=/usr/local/bin
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+
+libreoffice6.2 --headless --convert-to csv:"Text - txt - csv (StarCalc)":59 $TARGET
+rm $TARGET 2>/dev/null
+
+chmod -R 777 *
+cd $CPATH

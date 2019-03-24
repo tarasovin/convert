@@ -1,0 +1,19 @@
+#!/bin/bash
+
+TARGET="*.pdf"
+
+CPATH=${PWD}
+BIN=/usr/local/bin
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+
+for f in $TARGET; do
+pdftk "$f" burst;
+rm "$f" 2>/dev/null;
+done
+rm "doc_data.txt" 2>/dev/null;
+
+chmod -R 777 *
+cd $CPATH

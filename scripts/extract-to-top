@@ -1,0 +1,5 @@
+#!/bin/bash
+
+BIN=/usr/local/bin
+
+bash $BIN/extract-here $1

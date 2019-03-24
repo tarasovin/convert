@@ -1,0 +1,6 @@
+#!/bin/bash
+MSG="state changed"
+if [ "$1" != "" ]; then
+	MSG=$1
+fi
+git add . && git commit -a -m "$MSG"

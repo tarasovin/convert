@@ -1,0 +1,29 @@
+#!/bin/bash
+
+TARGET="*.xls"
+
+CPATH=${PWD}
+BIN=/usr/local/bin
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+
+TMP=$(mktemp -d ./tmp.XXXXXXXXX)
+mv $TARGET $TMP 2>/dev/null
+cd $TMP
+
+bash $BIN/xls-to-xlsx
+bash $BIN/xlsx-to-landscape
+bash $BIN/xlsx-to-xls
+
+rm *.xlsx 2>/dev/null
+
+cd ..
+mv $TMP/* ./ 2>/dev/null
+rm -R $TMP/ 2>/dev/null
+
+rm $TARGET 2>/dev/null
+
+chmod -R 777 *
+cd $CPATH

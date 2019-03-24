@@ -1,0 +1,82 @@
+#!/usr/bin/env gorun
+
+package main
+
+import (
+	"fmt"
+	"log"
+	"os"
+	"path/filepath"
+
+	sml "baliance.com/gooxml/schema/soo/sml"
+	spreadsheet "baliance.com/gooxml/spreadsheet"
+)
+
+func xlsxProcessing(source, target string) {
+	ss, err := spreadsheet.Open(source)
+	if err != nil {
+		log.Fatalf("Ошибка открытия документа: %s", err)
+	}
+
+	for _, sheet := range ss.Sheets() {
+		var fitToHeightAttr uint32 = 999
+		var fitToWidthAttr uint32 = 1
+		if sheet.X() == nil {
+			log.Fatalf("Не создан объект: %s", "sheet.X()")
+		}
+		if sheet.X().PageSetup == nil {
+			sheet.X().PageSetup = sml.NewCT_PageSetup()
+			if sheet.X().PageSetup == nil {
+				log.Fatalf("Не создан объект: %s", "PageSetup")
+			}
+		}
+		if sheet.X().SheetPr == nil {
+			sheet.X().SheetPr = sml.NewCT_SheetPr()
+			if sheet.X().SheetPr == nil {
+				log.Fatalf("Не создан объект: %s", "SheetPr")
+			}
+		}
+		if sheet.X().SheetPr.PageSetUpPr == nil {
+			sheet.X().SheetPr.PageSetUpPr = sml.NewCT_PageSetUpPr()
+			if sheet.X().SheetPr.PageSetUpPr == nil {
+				log.Fatalf("Не создан объект: %s", "SheetPr.PageSetUpPr")
+			}
+		}
+		fitToPageAttr := true
+		sheet.X().SheetPr.PageSetUpPr.FitToPageAttr = &fitToPageAttr
+		sheet.X().PageSetup.FitToHeightAttr = &fitToHeightAttr
+		sheet.X().PageSetup.FitToWidthAttr = &fitToWidthAttr
+		sheet.X().PageSetup.OrientationAttr = sml.ST_OrientationLandscape
+	}
+
+	if err := ss.Validate(); err != nil {
+		log.Fatalf("Ошибка валидации документа: %s", err)
+	}
+
+	ss.SaveToFile(target)
+}
+func main() {
+	ext := ".xlsx"
+	pattern := "*" + ext
+	path := ""
+	args := os.Args[1:]
+	fmt.Println("xlsx-to-landscape",args)
+	if len(args) > 0 {
+		pattern = args[0]
+	}
+	if len(args) > 1 {
+		path = args[1]
+	}
+	matches, err := filepath.Glob(filepath.Join(path,pattern))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for _, file := range matches {
+		if filepath.Ext(file) == ext {
+			fmt.Println("xlsx-to-landscape",file)
+			xlsxProcessing(file, file)
+		}
+	}
+	fmt.Println("xlsx-to-landscape","done")
+}

@@ -1,0 +1,56 @@
+#!/usr/bin/env gorun
+
+package main
+
+import (
+	"log"
+	"os"
+	"strings"
+    "path/filepath"
+
+	gooxml "baliance.com/gooxml/document"
+	sml "baliance.com/gooxml/schema/soo/sml"
+)
+
+func docxProcessing(source, target string) {
+	doc, err := gooxml.Open(source)
+	if err != nil {
+		log.Fatalf("Ошибка открытия документа: %s", err)
+	}
+
+	doc.BodySection().X().PgSz.OrientAttr = wml.ST_PageOrientationLandscape
+	h := doc.BodySection().X().PgSz.HAttr
+	w := doc.BodySection().X().PgSz.WAttr
+
+	hn := doc.BodySection().X().PgSz.HAttr.ST_UnsignedDecimalNumber
+	wn := doc.BodySection().X().PgSz.WAttr.ST_UnsignedDecimalNumber
+
+	if *hn > *wn {
+		doc.BodySection().X().PgSz.HAttr = w
+		doc.BodySection().X().PgSz.WAttr = h
+	}
+
+	if err := doc.Validate(); err != nil {
+		log.Fatalf("Ошибка валидации документа: %s", err)
+	}
+
+	doc.SaveToFile(target)
+}
+func main() {
+	ext := ".docx"
+	pattern := "*"+ext
+	args := os.Args[1:]
+    if len(args) > 0 {
+		pattern = args[0]
+	}
+	matches, err := filepath.Glob(pattern)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for _, file := range matches {
+		if filepath.Ext(file) == ext {
+			docxProcessing(file, file)
+		}
+	}
+}

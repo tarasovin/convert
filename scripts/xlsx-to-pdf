@@ -1,0 +1,27 @@
+#!/bin/bash
+
+iam=$(basename -- "$0")
+echo $iam "$1" $2
+
+TARGET="*.xlsx"
+MODE="landscape"
+
+BIN=/usr/local/bin
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+if [ "$2" != "" ]; then
+	MODE=$2
+fi
+if [ $MODE = "landscape" ]
+then
+    $BIN/xlsx-to-landscape "$TARGET" "${PWD}"
+else
+    $BIN/xlsx-to-portrait "$TARGET" "${PWD}"
+fi
+
+libreoffice6.2 --headless --convert-to pdf $TARGET
+rm $TARGET 2>/dev/null
+
+chmod -R 777 *

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+TARGET="*.pdf"
+DENSITY=200
+QUALITY=90
+
+CPATH=${PWD}
+BIN=/usr/local/bin
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+if [ "$2" != "" ]; then
+	DENSITY=$2
+fi
+if [ "$3" != "" ]; then
+	QUALITY=$3
+fi
+
+for f in $TARGET; do
+convert -units PixelsPerInch -density $DENSITY -quality $QUALITY -colorspace sRGB "$f" "$(basename "$f" .pdf)".png;
+done
+rm *.pdf 2>/dev/null
+
+chmod -R 777 *
+cd $CPATH
+
