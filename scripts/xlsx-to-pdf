@@ -1,12 +1,12 @@
 #!/bin/bash
 
+BIN=/usr/local/bin
 iam=$(basename -- "$0")
 echo $iam "$1" $2
+$BIN/commit "$iam start"
 
 TARGET="*.xlsx"
 MODE="landscape"
-
-BIN=/usr/local/bin
 
 if [ "$1" != "" ]; then
 	TARGET=$1
@@ -25,3 +25,4 @@ libreoffice6.2 --headless --convert-to pdf $TARGET
 rm $TARGET 2>/dev/null
 
 chmod -R 777 *
+$BIN/commit "$iam end"

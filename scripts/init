@@ -1,5 +1,8 @@
 #!/bin/bash
 
+iam=$(basename -- "$0")
+echo $iam
+
 TARGET=""
 MSG="init"
 
@@ -10,7 +13,9 @@ if [ "$2" != "" ]; then
 	TARGET=$2
 fi
 
-git config --global user.email "docker@convert.ru"
-git config --global user.name "Docker Convert"
-git init $TARGET
-git add . && git commit -a -m "$MSG"
+git config --global user.email "docker@convert.ru" &> /dev/null
+git config --global user.name "Docker Convert" &> /dev/null
+git init $TARGET &> /dev/null
+git add . &> /dev/null
+git commit -a -m "$MSG" &> /dev/null
+chmod -R 777 /files/.git/

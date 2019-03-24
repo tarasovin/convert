@@ -1,6 +1,13 @@
 #!/bin/bash
+BIN=/usr/local/bin
+
+if [ ! -d "/files/.git/" ]; then
+  $BIN/init
+fi
+
 MSG="state changed"
 if [ "$1" != "" ]; then
 	MSG=$1
 fi
-git add . && git commit -a -m "$MSG"
+git add . &> /dev/null
+git commit -a -m "$MSG" &> /dev/null

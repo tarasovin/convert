@@ -115,11 +115,5 @@ go build -i baliance.com/gooxml/...
 COPY ./scripts/ /usr/local/bin
 
 RUN mkdir -p /files
-# RUN git config --global user.email "docker@convert.ru" && \
-# git config --global user.name "Docker Convert" && \
-# git init /files && \
-# cd /files && \
-# git add . && \
-# git commit -a -m "init"
 WORKDIR /files
 VOLUME ["/files"]

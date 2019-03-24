@@ -1,14 +1,16 @@
 #!/bin/bash
 
+BIN=/usr/local/bin
 iam=$(basename -- "$0")
 echo $iam "$1" $2 $3 $4
+$BIN/commit "$iam start"
 
 TARGET="*.xlsx"
 MODE="landscape"
 DENSITY=200
 QUALITY=90
 
-BIN=/usr/local/bin
+
 
 if [ "$1" != "" ]; then
 	TARGET=$1
@@ -42,3 +44,4 @@ rm -R $TMP/ 2>/dev/null
 rm $TARGET 2>/dev/null
 
 chmod -R 777 *
+$BIN/commit "$iam end"
