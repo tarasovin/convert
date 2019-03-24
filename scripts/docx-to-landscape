@@ -3,13 +3,13 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
-	"strings"
-    "path/filepath"
+	"path/filepath"
 
 	gooxml "baliance.com/gooxml/document"
-	sml "baliance.com/gooxml/schema/soo/sml"
+	wml "baliance.com/gooxml/schema/soo/wml"
 )
 
 func docxProcessing(source, target string) {
@@ -17,7 +17,12 @@ func docxProcessing(source, target string) {
 	if err != nil {
 		log.Fatalf("Ошибка открытия документа: %s", err)
 	}
-
+	if doc.BodySection().X().PgSz == nil {
+		doc.BodySection().X().PgSz = wml.NewCT_PageSz()
+		if doc.BodySection().X().PgSz == nil {
+			log.Fatalf("Не создан объект: %s", "doc.BodySection().X().PgSz")
+		}
+	}
 	doc.BodySection().X().PgSz.OrientAttr = wml.ST_PageOrientationLandscape
 	h := doc.BodySection().X().PgSz.HAttr
 	w := doc.BodySection().X().PgSz.WAttr
@@ -38,19 +43,26 @@ func docxProcessing(source, target string) {
 }
 func main() {
 	ext := ".docx"
-	pattern := "*"+ext
 	args := os.Args[1:]
-    if len(args) > 0 {
+	pattern := "*" + ext
+	path := ""
+	fmt.Println("docx-to-landscape", args)
+	if len(args) > 0 {
 		pattern = args[0]
 	}
-	matches, err := filepath.Glob(pattern)
+	if len(args) > 1 {
+		path = args[1]
+	}
+	matches, err := filepath.Glob(filepath.Join(path, pattern))
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	for _, file := range matches {
 		if filepath.Ext(file) == ext {
+			fmt.Println("docx-to-landscape", file)
 			docxProcessing(file, file)
 		}
 	}
+	fmt.Println("docx-to-landscape", "done")
 }

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam "$1" $2
+$BIN/commit "$iam start"
+
+TARGET="*.docx"
+MODE="portrait"
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+if [ "$2" != "" ]; then
+	MODE=$2
+fi
+if [ $MODE = "landscape" ]
+then
+    $BIN/docx-to-landscape "$TARGET" "${PWD}"
+else
+    $BIN/docx-to-portrait "$TARGET" "${PWD}"
+fi
+
+libreoffice6.2 --headless --convert-to pdf $TARGET
+rm $TARGET 2>/dev/null
+
+chmod -R 777 *
+$BIN/commit "$iam end"

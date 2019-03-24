@@ -1,12 +1,14 @@
 #!/bin/bash
 
+BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
 TARGET="*.pdf"
 ANGLE=90
 DENSITY=200
 QUALITY=90
-
-CPATH=${PWD}
-BIN=/usr/local/bin
 
 if [ "$1" != "" ]; then
 	TARGET=$1
@@ -28,7 +30,7 @@ for f in $TARGET; do
 	cd $TMP
 	bash $BIN/pdf-split
 	for a in $TARGET; do
-		convert -units PixelsPerInch -density $DENSITY -quality $QUALITY -colorspace sRGB $a -rotate "$ANGLE" $a ;
+		convert -units PixelsPerInch -density $DENSITY -quality $QUALITY -colorspace sRGB "$a" -rotate "$ANGLE" "$a" ;
 	done
 	pdftk $TARGET cat output "$(basename "$f")"
 	mv "$(basename "$f")" ../ 2>/dev/null
@@ -38,4 +40,4 @@ for f in $TARGET; do
 done
 
 chmod -R 777 *
-cd $CPATH
+$BIN/commit "$iam end"

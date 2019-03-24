@@ -1,9 +1,11 @@
 #!/bin/bash
 
-TARGET="*.xls"
-
-CPATH=${PWD}
 BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
+TARGET="*.xls"
 
 if [ "$1" != "" ]; then
 	TARGET=$1
@@ -13,4 +15,5 @@ libreoffice6.2 --headless --convert-to xlsx $TARGET
 rm $TARGET 2>/dev/null
 
 chmod -R 777 *
-cd $CPATH
+
+$BIN/commit "$iam end"

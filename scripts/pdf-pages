@@ -1,9 +1,11 @@
 #!/bin/bash
 
-TARGET="*.pdf"
-
-CPATH=${PWD}
 BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
+TARGET="*.pdf"
 
 if [ "$1" != "" ]; then
 	TARGET=$1
@@ -18,4 +20,4 @@ done
 echo "Всего \"$COUNT\" стр."
 
 chmod -R 777 *
-cd $CPATH
+$BIN/commit "$iam end"

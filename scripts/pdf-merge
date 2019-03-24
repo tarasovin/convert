@@ -1,9 +1,11 @@
 #!/bin/bash
 
-TARGET="*.pdf"
-
-CPATH=${PWD}
 BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
+TARGET="*.pdf"
 
 if [ "$1" != "" ]; then
 	TARGET=$1
@@ -23,4 +25,4 @@ cd ..
 rm -R $TMP/ 2>/dev/null
 
 chmod -R 777 *
-cd $CPATH
+$BIN/commit "$iam end"

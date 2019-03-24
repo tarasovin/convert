@@ -18,4 +18,4 @@ git config --global user.name "Docker Convert" &> /dev/null
 git init $TARGET &> /dev/null
 git add . &> /dev/null
 git commit -a -m "$MSG" &> /dev/null
-chmod -R 777 /files/.git/
+chmod -R 777 /files

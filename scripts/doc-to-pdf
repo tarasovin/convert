@@ -1,0 +1,18 @@
+#!/bin/bash
+
+BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
+TARGET="*.doc"
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+
+libreoffice6.2 --headless --convert-to pdf $TARGET
+rm $TARGET 2>/dev/null
+
+chmod -R 777 *
+$BIN/commit "$iam end"

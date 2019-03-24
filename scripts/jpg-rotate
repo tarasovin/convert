@@ -1,12 +1,15 @@
 #!/bin/bash
 
+BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
 TARGET="*.jpg"
 ANGLE=90
 DENSITY=200
 QUALITY=90
 
-CPATH=${PWD}
-BIN=/usr/local/bin
 
 if [ "$1" != "" ]; then
 	TARGET=$1
@@ -22,9 +25,8 @@ if [ "$4" != "" ]; then
 fi
 
 for f in $TARGET; do
-convert -units PixelsPerInch -density $DENSITY -quality $QUALITY -colorspace sRGB $f -rotate $ANGLE $f ;
+convert -units PixelsPerInch -density $DENSITY -quality $QUALITY -colorspace sRGB "$f" -rotate "$ANGLE" "$f" ;
 done
-rm *.png 2>/dev/null
 
 chmod -R 777 *
-cd $CPATH
+$BIN/commit "$iam end"

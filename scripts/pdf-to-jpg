@@ -1,11 +1,14 @@
 #!/bin/bash
 
+BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
 TARGET="*.pdf"
 DENSITY=200
 QUALITY=90
 
-CPATH=${PWD}
-BIN=/usr/local/bin
 
 if [ "$1" != "" ]; then
 	TARGET=$1
@@ -23,5 +26,5 @@ done
 rm *.pdf 2>/dev/null
 
 chmod -R 777 *
-cd $CPATH
+$BIN/commit "$iam end"
 

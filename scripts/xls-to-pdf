@@ -1,27 +1,19 @@
 #!/bin/bash
 
-TARGET="*.xls"
-MODE="landscape"
-
-CPATH=${PWD}
 BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
+TARGET="*.xls"
+
 
 if [ "$1" != "" ]; then
 	TARGET=$1
-fi
-if [ "$2" != "" ]; then
-	MODE=$2
-fi
-
-if [ $MODE = "landscape" ]
-then
-    bash $BIN/xls-to-landscape $TARGET
-else
-    bash $BIN/xls-to-portrait $TARGET
 fi
 
 libreoffice6.2 --headless --convert-to pdf $TARGET
 rm $TARGET 2>/dev/null
 
 chmod -R 777 *
-cd $CPATH
+$BIN/commit "$iam end"

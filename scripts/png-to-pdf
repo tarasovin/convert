@@ -1,9 +1,11 @@
 #!/bin/bash
 
-TARGET="*.png"
-
-CPATH=${PWD}
 BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
+TARGET="*.png"
 
 if [ "$1" != "" ]; then
 	TARGET=$1
@@ -15,4 +17,4 @@ done
 rm *.png 2>/dev/null
 
 chmod -R 777 *
-cd $CPATH
+$BIN/commit "$iam end"

@@ -1,9 +1,11 @@
 #!/bin/bash
 
-TARGET="*.csv"
-
-CPATH=${PWD}
 BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
+TARGET="*.csv"
 
 if [ "$1" != "" ]; then
 	TARGET=$1
@@ -13,4 +15,4 @@ libreoffice6.2 --headless --convert-to xlsx --infilter="Text - txt - csv (StarCa
 rm $TARGET 2>/dev/null
 
 chmod -R 777 *
-cd $CPATH
+$BIN/commit "$iam end"

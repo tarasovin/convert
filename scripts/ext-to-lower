@@ -1,7 +1,15 @@
 #!/bin/bash
+
+BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
 for f in *
 do 
   e="${f##*.}"
   b="${f%.*}"
   mv "$f" "${b}.${e,,}" 2>/dev/null
 done
+
+$BIN/commit "$iam end"

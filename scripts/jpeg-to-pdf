@@ -1,9 +1,11 @@
 #!/bin/bash
 
-TARGET="*.jpeg"
-
-CPATH=${PWD}
 BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
+TARGET="*.jpeg"
 
 if [ "$1" != "" ]; then
 	TARGET=$1
@@ -12,7 +14,7 @@ fi
 for f in $TARGET; do
 convert "$f" "$(basename "$f" .jpeg)".pdf;
 done
-rm *.png 2>/dev/null
+rm *.jpeg 2>/dev/null
 
 chmod -R 777 *
-cd $CPATH
+$BIN/commit "$iam end"

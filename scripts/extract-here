@@ -1,5 +1,10 @@
 #!/bin/bash
 
+BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
 if [ "$1" = "" ]
 then
     find . -mindepth 2 -type f -print -exec mv {} . \;
@@ -7,3 +12,4 @@ else
     find . -name "$1" -mindepth 2 -type f -print -exec mv {} . \;
 fi
 
+$BIN/commit "$iam end"
