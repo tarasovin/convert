@@ -24,11 +24,11 @@ docker build -t tarasov/convert .
 ## Запуск
 *Linux*
 ```sh
-docker run --rm -it --name "convert" -v "${PWD}":/files tarasov/convert
+docker run --rm -it -v "${PWD}":/files tarasov/convert
 ```
 *Windows*
 ```sh
-docker run --rm -it --name "convert" -v "C:/User/Documents":/files tarasov/convert
+docker run --rm -it -v "C:/User/Documents":/files tarasov/convert
 ```
 
 ## Описание
