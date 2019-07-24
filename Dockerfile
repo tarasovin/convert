@@ -108,7 +108,13 @@ go get github.com/unidoc/unidoc/...
 
 # Install xsltproc, xmllint, wkhtmltopdf
 RUN apt-get update && \
-apt install -y --no-install-recommends xsltproc libxml2-utils wkhtmltopdf && \
+apt install -y --no-install-recommends xsltproc libxml2-utils wkhtmltopdf xfonts-base xfonts-75dpi && \
+apt-get clean && \
+apt-get autoclean && \
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN wget https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb && \
+dpkg -i *.deb && \
 apt-get clean && \
 apt-get autoclean && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
