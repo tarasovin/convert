@@ -1,0 +1,23 @@
+#!/bin/bash
+
+BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
+TARGET="*.xml"
+
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+
+for f in $TARGET; do
+XSLT=$(grep -Eoi '<?xml-stylesheet [^>]+>' "$f" | grep -Eo 'href="[^\"]+"' | grep -Eo '(http|https|ftp)://[^\"]+')
+echo $XSLT
+xsltproc -o "$(basename "$f" .xml)".html "$XSLT" "$f";
+done
+rm $TARGET 2>/dev/null
+
+chmod -R 777 *
+$BIN/commit "$iam end"

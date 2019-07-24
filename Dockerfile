@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV GOVERSION 1.12.1
@@ -75,10 +75,10 @@ apt-get update && \
 apt-get build-dep -y imagemagick && \
 wget https://www.imagemagick.org/download/ImageMagick.tar.gz && \
 tar xf ImageMagick.tar.gz && \
-cd ImageMagick-7.0.8-34 && \
+cd ImageMagick-7.0.8-56 && \
 ./configure && make && make install && \
 cd ../ && \
-rm -rf ./ImageMagick-7.0.8-34 && \
+rm -rf ./ImageMagick-7.0.8-56 && \
 apt clean all && \
 ldconfig /usr/local/lib && \
 apt-get clean && \
@@ -86,12 +86,12 @@ apt-get autoclean && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #Install LibreOffice
-RUN wget http://libreoffice-mirror.rbc.ru/pub/libreoffice/libreoffice/stable/6.2.1/deb/x86_64/LibreOffice_6.2.1_Linux_x86-64_deb.tar.gz && \
-tar zxf LibreOffice_6.2.1_Linux_x86-64_deb.tar.gz && \
-rm LibreOffice_6.2.1_Linux_x86-64_deb.tar.gz && \
-cd LibreOffice_6.2.1.2_Linux_x86-64_deb/DEBS && \
+RUN wget http://download.documentfoundation.org/libreoffice/stable/6.2.5/deb/x86_64/LibreOffice_6.2.5_Linux_x86-64_deb.tar.gz && \
+tar zxf LibreOffice_6.2.5_Linux_x86-64_deb.tar.gz && \
+rm LibreOffice_6.2.5_Linux_x86-64_deb.tar.gz && \
+cd LibreOffice_6.2.5.2_Linux_x86-64_deb/DEBS && \
 dpkg -i *.deb && \
-rm -R /LibreOffice_6.2.1.2_Linux_x86-64_deb/ && \
+rm -R /LibreOffice_6.2.5.2_Linux_x86-64_deb/ && \
 apt-get clean && \
 apt-get autoclean && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -99,16 +99,19 @@ rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 # Install gorun, elvish, gosh, gooxml
 RUN go get github.com/mkouhei/gosh && \
 go get github.com/erning/gorun && \
-go get github.com/elves/elvish && \
-cd `go env GOPATH`/src/github.com/elves/elvish && make get && \
 go install github.com/erning/gorun && \
-go install github.com/elves/elvish && \
 go install github.com/mkouhei/gosh && \
 mv $GOPATH/bin/gorun /usr/local/bin/gorun && \
-mv $GOPATH/bin/elvish /usr/local/bin/elvish && \
 mv $GOPATH/bin/gosh /usr/local/bin/gosh && \
-go get baliance.com/gooxml/ && \
-go build -i baliance.com/gooxml/...
+go get github.com/unidoc/unioffice && \
+go get github.com/unidoc/unidoc/...
+
+# Install xsltproc, xmllint, wkhtmltopdf
+RUN apt-get update && \
+apt install -y --no-install-recommends xsltproc libxml2-utils wkhtmltopdf && \
+apt-get clean && \
+apt-get autoclean && \
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # RUN mv /etc/ImageMagick/policy.xml /etc/ImageMagick/backup-policy.xml
 

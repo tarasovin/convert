@@ -1,0 +1,25 @@
+#!/bin/bash
+
+BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
+TARGET="*.html"
+ORIENTATION="Landscape"
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+
+if [ "$2" != "" ]; then
+	ORIENTATION=$2
+fi
+
+for f in $TARGET; do
+wkhtmltopdf --orientation $ORIENTATION "$f" "$(basename "$f" .html)".pdf
+done
+rm $TARGET 2>/dev/null
+
+chmod -R 777 *
+$BIN/commit "$iam end"

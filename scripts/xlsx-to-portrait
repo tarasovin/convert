@@ -8,8 +8,8 @@ import (
 	"os"
 	"path/filepath"
 
-	sml "baliance.com/gooxml/schema/soo/sml"
-	spreadsheet "baliance.com/gooxml/spreadsheet"
+	sml "github.com/unidoc/unidoc/schema/soo/sml"
+	spreadsheet "github.com/unidoc/unidoc/spreadsheet"
 )
 
 func xlsxProcessing(source, target string) {
