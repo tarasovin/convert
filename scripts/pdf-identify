@@ -1,0 +1,21 @@
+#!/bin/bash
+
+BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
+TARGET="*.pdf"
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+
+for f in $TARGET; do
+#pdfimages -list "$f"
+identify -verbose "$f"
+done
+
+chmod -R 777 *
+$BIN/commit "$iam end"
+

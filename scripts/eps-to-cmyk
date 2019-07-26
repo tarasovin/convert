@@ -1,0 +1,21 @@
+#!/bin/bash
+
+BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
+TARGET="*.ps"
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+
+for f in $TARGET; do
+#gs -dPDFX -dBATCH -dNOPAUSE -dNOOUTERSAVE -sDEVICE=pdfwrite -sColorConversionStrategy=CMYK -dProcessColorModel=/DeviceCMYK -dPDFSETTINGS=/prepress -sOutputFile="${1%%.pdf}_X-3.pdf" PDFX_def.ps "$1"
+gs -o "$(basename "$f" .pdf)".cmyk.pdf -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -sColorConversionStrategy=CMYK -sColorConversionStrategyForImages=CMYK -dOverrideICC -dEncodeColorImages=false "$f"
+done
+
+chmod -R 777 *
+$BIN/commit "$iam end"
+
