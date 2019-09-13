@@ -1,0 +1,23 @@
+#!/bin/bash
+
+BIN=/usr/local/bin
+iam=$(basename -- "$0")
+echo $iam
+$BIN/commit "$iam start"
+
+TARGET="*.pdf"
+DPI=150
+
+if [ "$1" != "" ]; then
+	TARGET=$1
+fi
+if [ "$2" != "" ]; then
+	DPI=$2
+fi 
+for f in $TARGET; do
+gs -q -dNOPAUSE -dBATCH -dSAFER -dPDFA=2 -dPDFACompatibilityPolicy=1 -dSimulateOverprint=true -sDEVICE=pdfwrite -dCompatibilityLevel=1.3 -dPDFSETTINGS=/screen -dEmbedAllFonts=true -dSubsetFonts=true -dAutoRotatePages=/None -dColorImageDownsampleType=/Bicubic -dColorImageResolution=$DPI -dGrayImageDownsampleType=/Bicubic -dGrayImageResolution=$DPI -dMonoImageDownsampleType=/Bicubic -dMonoImageResolution=$DPI -sOutputFile="$(basename "$f" .pdf)"."$DPI"dpi.pdf "$f"
+done
+
+chmod -R 777 *
+$BIN/commit "$iam end"
+
