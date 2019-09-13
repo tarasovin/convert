@@ -86,12 +86,12 @@ apt-get autoclean && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #Install LibreOffice
-RUN wget http://download.documentfoundation.org/libreoffice/stable/6.2.5/deb/x86_64/LibreOffice_6.2.5_Linux_x86-64_deb.tar.gz && \
-tar zxf LibreOffice_6.2.5_Linux_x86-64_deb.tar.gz && \
-rm LibreOffice_6.2.5_Linux_x86-64_deb.tar.gz && \
-cd LibreOffice_6.2.5.2_Linux_x86-64_deb/DEBS && \
+RUN wget ftp://mirror.kumi.systems/tdf/libreoffice/stable/6.3.1/deb/x86_64/LibreOffice_6.3.1_Linux_x86-64_deb.tar.gz && \
+tar zxf LibreOffice_6.3.1_Linux_x86-64_deb.tar.gz && \
+rm LibreOffice_6.3.1_Linux_x86-64_deb.tar.gz && \
+cd LibreOffice_6.3.1.2_Linux_x86-64_deb/DEBS && \
 dpkg -i *.deb && \
-rm -R /LibreOffice_6.2.5.2_Linux_x86-64_deb/ && \
+rm -R /LibreOffice_6.3.1.2_Linux_x86-64_deb/ && \
 apt-get clean && \
 apt-get autoclean && \
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
