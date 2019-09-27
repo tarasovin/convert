@@ -11,7 +11,7 @@ if [ "$1" != "" ]; then
 	TARGET=$1
 fi
 
-libreoffice6.2 --headless --convert-to docx $TARGET
+libreoffice6.3 --headless --convert-to docx $TARGET
 rm $TARGET 2>/dev/null
 
 chmod -R 777 *

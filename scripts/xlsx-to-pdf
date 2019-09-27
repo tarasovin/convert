@@ -21,7 +21,7 @@ else
     $BIN/xlsx-to-portrait "$TARGET" "${PWD}"
 fi
 
-libreoffice6.2 --headless --convert-to pdf $TARGET
+libreoffice6.3 --headless --convert-to pdf $TARGET
 rm $TARGET 2>/dev/null
 
 chmod -R 777 *

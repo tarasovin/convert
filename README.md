@@ -5,7 +5,7 @@
 
 *  [`imagemagick`](https://www.imagemagick.org/) - набор утилит для работы с изображениями различных [форматов](https://www.imagemagick.org/script/formats.php), таких как PNG, JPEG, GIF, HEIC, TIFF, [DPX](https://www.imagemagick.org/script/motion-picture.php), [EXR](https://www.imagemagick.org/script/high-dynamic-range.php), WebP, Postscript, PDF, и SVG.
 
-*  [`libreoffice6.2`](https://help.libreoffice.org/Common/Starting_the_Software_With_Parameters/ru) - кроссплатформенный, свободно распространяемый офисный пакет с открытым исходным кодом для использования в режиме --headless
+*  [`libreoffice6.3`](https://help.libreoffice.org/Common/Starting_the_Software_With_Parameters/ru) - кроссплатформенный, свободно распространяемый офисный пакет с открытым исходным кодом для использования в режиме --headless
 
 *  [`gosh`](https://github.com/mkouhei/gosh) - "interactive shell" для Golang
 
