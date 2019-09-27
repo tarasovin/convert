@@ -75,10 +75,10 @@ apt-get update && \
 apt-get build-dep -y imagemagick && \
 wget https://www.imagemagick.org/download/ImageMagick.tar.gz && \
 tar xf ImageMagick.tar.gz && \
-cd ImageMagick-7.0.8-64 && \
+cd ImageMagick-7.0.8-66 && \
 ./configure && make && make install && \
 cd ../ && \
-rm -rf ./ImageMagick-7.0.8-64 && \
+rm -rf ./ImageMagick-7.0.8-66 && \
 apt clean all && \
 ldconfig /usr/local/lib && \
 apt-get clean && \
