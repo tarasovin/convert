@@ -8,8 +8,8 @@ import (
 	"os"
 	"path/filepath"
 
-	sml "github.com/unidoc/unidoc/schema/soo/sml"
-	spreadsheet "github.com/unidoc/unidoc/spreadsheet"
+	sml "github.com/unidoc/unioffice/schema/soo/sml"
+	spreadsheet "github.com/unidoc/unioffice/spreadsheet"
 )
 
 func xlsxProcessing(source, target string) {

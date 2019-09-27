@@ -8,8 +8,8 @@ import (
 	"os"
 	"path/filepath"
 
-	gooxml "github.com/unidoc/unidoc/document"
-	wml "github.com/unidoc/unidoc/schema/soo/wml"
+	gooxml "github.com/unidoc/unioffice/document"
+	wml "github.com/unidoc/unioffice/schema/soo/wml"
 )
 
 func docxProcessing(source, target string) {
